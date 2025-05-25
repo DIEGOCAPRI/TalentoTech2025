@@ -1,0 +1,44 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+
+.login {
+    background-color: rgba(25, 78, 27, 0.295);
+    width: 25%;
+    height: 350px;
+    margin:auto;
+    margin-top: 80px;
+    border: 3px solid rgb(145, 140, 140);
+    border-radius: 3%;
+    padding: 20px 10px 20px 10px;
+    
+}
+.login h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+    font-size: 30px;
+    color: rgb(78, 78, 78)
+}
+ .login input {
+    display: block;
+    margin:auto;
+    width : 80%;
+    height: auto;
+    border-radius: 5%;
+    margin-bottom: 30px;
+ }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+ .login button {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+ }
