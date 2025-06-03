@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import NewUser from './pages/NewUser';
 import Footer from './components/Footer';
 import Login from './pages/Login';
+import Carrito from './pages/Carrito';
 
 import AdminProductos from './pages/AdminProductos';
 
@@ -49,6 +50,7 @@ function App() {
             <Route path="/faqs" element={<Faqs/>}></Route>
             <Route path="/prodxcategoria/:categoria" element={<ProductosxCategoria/>}></Route>
             <Route path="/adminproductos" element={<RutaProtegida><AdminProductos/></RutaProtegida>}></Route>
+            <Route path="/carrito" element={<Carrito/>}></Route>
             <Route/>
         </Routes>       
         <Footer/>    
