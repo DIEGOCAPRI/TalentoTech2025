@@ -1,8 +1,14 @@
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import {Button, Form, Table} from 'react-bootstrap';
+import { useState , useEffect} from "react";
+
+
 
 
 function AdminProductos(){
+
+  const [productos, setProductos] = useState([]);
+
+
     return (
         <>
           <h2 className="text-center mt-5 mb-5 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Alta de Prodcutos</h2>
@@ -33,6 +39,43 @@ function AdminProductos(){
                   Agregar
                 </Button>
            </Form>
+           <h2 className="text-center mt-5 mb-3 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Listado de Productos</h2>
+           <Table striped bordered hover variant="light" style={{width:"50%", margin:"auto"}}>
+              <thead>
+                <tr style={{textAlign:"center"}}>
+                  <th>Producto</th>
+                  <th>Descripción</th>
+                  <th>Categoria</th>
+                  <th>Precio</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>          
+            {productos.length === 1 ? 
+            (<td colSpan={4} style={{color:"black", textAlign:"center"}}>No hay productos cargados</td>) 
+            :(<tbody>
+                <tr style={{textAlign:"center"}}> 
+                  <td>1</td>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>@mdo</td>
+                  <td>
+                     <Button
+                        variant="warning"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => onEdit({ id, nombre, precio })}
+                      >Editar
+                      </Button>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        className="me-2"
+                        onClick={() => onEdit({ id, nombre, precio })}
+                      >Eliminar</Button>
+                  </td>
+                </tr>
+                </tbody>)}
+             </Table>
         </>
     )
 }
