@@ -52,6 +52,9 @@ function NavBar(){
               <NavDropdown.Item>
                 <Link to="/adminproductos" style={{textDecoration:"none", color:"black"}}>Alta de Productos</Link>
               </NavDropdown.Item>
+              <NavDropdown.Item>
+                <Link to="/admincategorias" style={{textDecoration:"none", color:"black"}}>Alta de Categorias</Link>
+              </NavDropdown.Item>
             </NavDropdown>
             )}            
             <NavDropdown title="Categorias" id="basic-nav-dropdown">

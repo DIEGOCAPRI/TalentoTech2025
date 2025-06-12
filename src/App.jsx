@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import Carrito from './pages/Carrito';
 
 import AdminProductos from './pages/AdminProductos';
+import AdminCategorias from './pages/AdminCategorias';
 
 ///links del footer
 import Locales from './pages/Locales';
@@ -50,6 +51,7 @@ function App() {
             <Route path="/faqs" element={<Faqs/>}></Route>
             <Route path="/prodxcategoria/:categoria" element={<ProductosxCategoria/>}></Route>
             <Route path="/adminproductos" element={<RutaProtegida><AdminProductos/></RutaProtegida>}></Route>
+            <Route path="/admincategorias" element={<RutaProtegida><AdminCategorias/></RutaProtegida>}></Route>
             <Route path="/carrito" element={<Carrito/>}></Route>
             <Route/>
         </Routes>       
