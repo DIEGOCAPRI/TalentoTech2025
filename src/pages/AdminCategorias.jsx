@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 function AdminCategorias(){
     
     const [categorias, setCategorias] = useState([]);
+    const [categoria, setCategoria] = useState([]);
 
     const url = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias";
 
@@ -23,6 +24,32 @@ function AdminCategorias(){
         apiCategorias();
     },[])
    
+    const handleCategoria = (e)=>{
+     setCategoria(e.target.value);
+    }
+
+    const createCategoria = async(e)=>{
+      e.preventDefault();
+      if(categoria.length < 3){
+        console.log('texto demasiado corto');
+      }
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({name: categoria}),
+        })
+        if (!res.ok) throw new Error("Error al crear item");
+        await setCategorias();      
+      }
+      catch(error) {
+        alert("Error creando item");
+        console.error(error);
+      }
+      finally {
+        setCategoria('');
+      }
+    }
 
     return (
         <>
@@ -36,9 +63,13 @@ function AdminCategorias(){
                        border: '3px solid rgb(230, 223, 223)'}}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Categoría</Form.Label>
-                  <Form.Control type="text" placeholder="Nombre de la categoría" />
+                  <Form.Control 
+                  type="text" 
+                  placeholder="Nombre de la categoría" 
+                  value= {categoria}
+                  onChange ={handleCategoria} />
                 </Form.Group>
-                <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}>
+                <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  onClick={createCategoria}>
                   Agregar
                 </Button>
            </Form>
@@ -55,7 +86,7 @@ function AdminCategorias(){
             (<td colSpan={4} style={{color:"black", textAlign:"center"}}>No hay productos cargados</td>) 
             :(<tbody>
                 {categorias.map(categoria=>
-                    <tr style={{textAlign:"center"}}> 
+                    <tr style={{textAlign:"center"}} key={categoria.id}> 
                     <td>{categoria.id}</td>
                     <td>{categoria.name}</td>
                     <td><Button
