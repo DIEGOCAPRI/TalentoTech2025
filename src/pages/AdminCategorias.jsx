@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 function AdminCategorias(){
     
     const [categorias, setCategorias] = useState([]);
-    const [categoria, setCategoria] = useState([]);
+    const [categoria, setCategoria] = useState('');
 
     const url = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias";
 
@@ -27,11 +27,13 @@ function AdminCategorias(){
     const handleCategoria = (e)=>{
      setCategoria(e.target.value);
     }
-
+    
+    ///Alta categoría
     const createCategoria = async(e)=>{
       e.preventDefault();
       if(categoria.length < 3){
-        console.log('texto demasiado corto');
+        Swal.fire('La categoría no puede contener menos de 3 caracteres');
+        return;
       }
       try {
         const res = await fetch(url, {
@@ -40,15 +42,31 @@ function AdminCategorias(){
           body: JSON.stringify({name: categoria}),
         })
         if (!res.ok) throw new Error("Error al crear item");
-        await setCategorias();      
+        Swal.fire('Categoría cargada correctamente');
+        await apiCategorias();      
       }
       catch(error) {
-        alert("Error creando item");
+        Swal.fire('Error al cargar la categoría');
         console.error(error);
       }
       finally {
         setCategoria('');
       }
+    }
+
+    //Delete Categoría
+
+    const onDelete = async(id)=>{
+        console.log(id);
+        try {
+
+        }
+        catch {
+
+        }
+        finally {
+          
+        }
     }
 
     return (
@@ -60,7 +78,8 @@ function AdminCategorias(){
                        backgroundColor:"rgba(248,249,250)",
                        padding: "20px 10px",
                        borderRadius: "3%",
-                       border: '3px solid rgb(230, 223, 223)'}}>
+                       border: '3px solid rgb(230, 223, 223)'}}
+                onSubmit={createCategoria}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Categoría</Form.Label>
                   <Form.Control 
@@ -69,10 +88,10 @@ function AdminCategorias(){
                   value= {categoria}
                   onChange ={handleCategoria} />
                 </Form.Group>
-                <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  onClick={createCategoria}>
+                <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  >
                   Agregar
                 </Button>
-           </Form>
+        </Form>
            <h2 className="text-center mt-5 mb-3 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Listado de Categorías</h2>
            <Table striped bordered hover variant="light" style={{width:"50%", margin:"auto"}}>
               <thead>
@@ -100,7 +119,7 @@ function AdminCategorias(){
                         variant="danger"
                         size="sm"
                         className="me-2"
-                        onClick={() => onEdit({ id, nombre, precio })}
+                        onClick={() => onDelete(categoria.id)}
                         >Eliminar</Button>
                     </td>
                     </tr>)}
