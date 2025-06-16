@@ -7,6 +7,7 @@ function AdminCategorias(){
     
     const [categorias, setCategorias] = useState([]);
     const [categoria, setCategoria] = useState('');
+    const [editando, setEditando] = useState(false);
 
     const url = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias";
 
@@ -59,18 +60,25 @@ function AdminCategorias(){
     const onDelete = async(id)=>{
         console.log(id);
         try {
-
+           const res = await fetch(`${url}/${id}`, {
+           method: "DELETE",
+           headers: { "Content-Type": "application/json" },
+           body: JSON.stringify({id: id}),
+        })
+         if (!res.ok) throw new Error("Error al borrar categoría");
+         Swal.fire('La categoría fue eliminada correctamente');
+         await apiCategorias(); 
         }
-        catch {
-
+        catch (error) {
+          Swal.fire('Error al eliminar la categoría');
         }
         finally {
-          
+            console.log(id);
         }
     }
 
     return (
-        <>
+        <>{console.log(editando)}
         <h2 className="text-center mt-5 mb-5 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Alta de Categorías</h2>
         <Form 
                style={{marginLeft: "35%", 
@@ -88,9 +96,14 @@ function AdminCategorias(){
                   value= {categoria}
                   onChange ={handleCategoria} />
                 </Form.Group>
-                <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  >
+                {!editando  ?  
+                  (<Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  >
                   Agregar
-                </Button>
+                </Button>) :
+                  (<Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  >
+                  Editar
+                </Button>) }
+                
         </Form>
            <h2 className="text-center mt-5 mb-3 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Listado de Categorías</h2>
            <Table striped bordered hover variant="light" style={{width:"50%", margin:"auto"}}>
