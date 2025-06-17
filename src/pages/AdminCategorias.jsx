@@ -1,4 +1,4 @@
-import {Button, Form, Table} from 'react-bootstrap';
+import {Button, Form, Table,  Modal} from 'react-bootstrap';
 import { useState , useEffect} from "react";
 import Swal from 'sweetalert2';
 
@@ -7,7 +7,8 @@ function AdminCategorias(){
     
     const [categorias, setCategorias] = useState([]);
     const [categoria, setCategoria] = useState('');
-    const [editando, setEditando] = useState(false);
+    const [catEditada, setCatEditada] = useState({id:'', name: ''});
+    const [showModal, setShowModal] = useState(false);
 
     const url = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias";
 
@@ -77,8 +78,27 @@ function AdminCategorias(){
         }
     }
 
+    //Modal edición
+
+    const openModalEdit = (id, nombre)=>{
+       console.log(id, nombre);
+       setCatEditada({"id" : id,
+                      "name": nombre
+       });
+       console.log(catEditada);
+        setTimeout(() => setShowModal(true), 0);
+    }
+
+     const handleCloseModal = () => {
+    setShowModal(false);
+    }
+
+    const onEdit = ()=> {
+      console.log(catEditada);
+    }
+
     return (
-        <>{console.log(editando)}
+        <>
         <h2 className="text-center mt-5 mb-5 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Alta de Categorías</h2>
         <Form 
                style={{marginLeft: "35%", 
@@ -95,14 +115,11 @@ function AdminCategorias(){
                   placeholder="Nombre de la categoría" 
                   value= {categoria}
                   onChange ={handleCategoria} />
-                </Form.Group>
-                {!editando  ?  
-                  (<Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  >
+                </Form.Group>            
+                  <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  >
                   Agregar
-                </Button>) :
-                  (<Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  >
-                  Editar
-                </Button>) }
+                </Button>
+                  
                 
         </Form>
            <h2 className="text-center mt-5 mb-3 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Listado de Categorías</h2>
@@ -125,7 +142,7 @@ function AdminCategorias(){
                         variant="warning"
                         size="sm"
                         className="me-2"
-                        onClick={() => onEdit({ id, nombre, precio })}
+                        onClick={() => openModalEdit(categoria.id, categoria.name)}
                         >Editar
                         </Button>
                         <Button
@@ -139,7 +156,42 @@ function AdminCategorias(){
                
                 </tbody>)}
              </Table>
-        </>
+
+     <Modal show={showModal} onHide={handleCloseModal}>
+      {console.log("catEditada", catEditada)}
+        <Modal.Header closeButton>
+          <Modal.Title>
+            Editar categoría
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3" controlId="formName">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder={catEditada.name}
+                name="name"
+                value={catEditada.name || ''}
+                onChange={(e)=> setCatEditada({...catEditada, name: e.target.value})}
+              />
+            </Form.Group>
+            
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Cancelar
+          </Button>
+          <Button
+            variant="primary"
+            onClick={onEdit}
+          >
+            Edit
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      </>
     )
 }
 
