@@ -48,12 +48,12 @@ function AdminCategorias(){
         await apiCategorias();      
       }
       catch(error) {
-        Swal.fire('Error al cargar la categoría');
-        console.error(error);
+        Swal.fire(`Error al cargar la categoría${error}`);     
       }
       finally {
         setCategoria('');
       }
+     
     }
 
     //Delete Categoría
@@ -93,8 +93,27 @@ function AdminCategorias(){
     setShowModal(false);
     }
 
-    const onEdit = ()=> {
+    const onEdit = async()=> {
       console.log(catEditada);
+      try{
+        const res = await fetch(`${url}/${catEditada.id}`, {
+          method : 'PUT',
+          headers: {"Content-Type" : "application/json"},
+          body: JSON.stringify({id: catEditada.id ,
+          name: catEditada.name
+          })
+        })
+        if (!res.ok) throw new Error("Error al editar categoría");
+        Swal.fire('La categoría fue editada correctamente');
+        await apiCategorias(); 
+      }
+      catch (error) {
+        Swal.fire('Error al editar la categoría');
+      }
+      finally {
+        setCatEditada({id:'', name: ''});
+        handleCloseModal();
+      }
     }
 
     return (
@@ -113,7 +132,7 @@ function AdminCategorias(){
                   <Form.Control 
                   type="text" 
                   placeholder="Nombre de la categoría" 
-                  value= {categoria}
+                  value= {categoria ? categoria : ''}
                   onChange ={handleCategoria} />
                 </Form.Group>            
                   <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}  >
