@@ -19,7 +19,7 @@ function AdminCategorias(){
         setCategorias(response);
        }
        catch(e) {
-         sweetError();
+         sweetError(e);
        }
     }
      useEffect(()=>{

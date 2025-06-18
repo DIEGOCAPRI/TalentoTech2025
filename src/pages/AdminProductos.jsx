@@ -7,6 +7,23 @@ import { useState , useEffect} from "react";
 function AdminProductos(){
 
   const [productos, setProductos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+
+  const urlCategorias = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias";
+
+  const apiCategorias = async()=>{
+       try {
+        let request = await fetch(urlCategorias);
+        let response = await request.json();
+        setCategorias(response);
+       }
+       catch(e) {
+         sweetError(e);
+       }
+    }
+     useEffect(()=>{
+        apiCategorias();
+    },[])
 
 
     return (
@@ -28,9 +45,14 @@ function AdminProductos(){
                   <Form.Control type="text" placeholder="Descripción del producto" />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Categoría</Form.Label>
-                  <Form.Control type="text" placeholder="Categoría" />
-                </Form.Group>
+                  <Form.Label>Categoría</Form.Label>           
+                <Form.Select aria-label="Seleccione una categoría" defaultValue="">
+                  <option value="" disabled>Seleccione una categoría</option>
+                  {categorias.map(categoria=> 
+                    <option key={categoria.id} value={categoria.id}>{categoria.name}</option>
+                  )}
+                </Form.Select>
+                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Precio</Form.Label>
                   <Form.Control type="number" placeholder="Precio" />
