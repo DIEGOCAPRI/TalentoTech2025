@@ -10,6 +10,7 @@ function AdminProductos(){
   const [categorias, setCategorias] = useState([]);
 
   const urlCategorias = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias";
+  const urlProductos = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/productos";
 
   const apiCategorias = async()=>{
        try {
@@ -21,8 +22,24 @@ function AdminProductos(){
          sweetError(e);
        }
     }
+
+  const apiProductos = async() => {
+    try{
+      let request = await fetch(urlProductos);
+      let response = await request.json();
+      await setProductos(response);
+      console.log(response);
+    }
+    catch(e){
+      sweetError(e);
+    }
+  }  
      useEffect(()=>{
         apiCategorias();
+    },[]);
+
+    useEffect(()=>{
+        apiProductos();
     },[])
 
 
@@ -69,33 +86,35 @@ function AdminProductos(){
                   <th>Descripción</th>
                   <th>Categoria</th>
                   <th>Precio</th>
+                  <th>Stock</th>
                   <th>Acciones</th>
                 </tr>
               </thead>          
-            {productos.length === 1 ? 
+            {productos.length === 0 ? 
             (<td colSpan={4} style={{color:"black", textAlign:"center"}}>No hay productos cargados</td>) 
             :(<tbody>
-                <tr style={{textAlign:"center"}}> 
-                  <td>1</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>
-                     <Button
-                        variant="warning"
-                        size="sm"
-                        className="me-2"
-                        onClick={() => onEdit({ id, nombre, precio })}
-                      >Editar
-                      </Button>
-                      <Button
-                        variant="danger"
-                        size="sm"
-                        className="me-2"
-                        onClick={() => onEdit({ id, nombre, precio })}
-                      >Eliminar</Button>
-                  </td>
-                </tr>
+               {productos.map(producto=> 
+                    <tr style={{textAlign:"center"}} key={producto.id}>
+                    <td>{producto.title}</td>
+                    <td>{producto.description}</td>
+                    <td>{producto.category}</td>
+                    <td>{producto.price}</td>
+                    <td>{producto.stock}</td>
+                    <td><Button
+                          variant="warning"
+                          size="sm"
+                          className="me-2"
+                          onClick={() => onEdit({ id, nombre, precio })}
+                          >Editar
+                        </Button>
+                        <Button
+                          variant="danger"
+                          size="sm"
+                          className="me-2"
+                          onClick={() => onEdit({ id, nombre, precio })}
+                          >Eliminar
+                        </Button></td>
+                    </tr>  )}              
                 </tbody>)}
              </Table>
         </>
