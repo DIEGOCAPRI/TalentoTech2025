@@ -57,11 +57,7 @@ function AdminProductos(){
       })
       if (!res.ok) throw new Error("Error al crear producto");
 
-      Swal.fire({
-          icon: "success",
-          title: "Producto Cargado",
-          text: "Se ha cargado el producto correctamente"
-          });
+      Swal.fire('Producto cargado correctamente');
     }
     catch(error){
        Swal.fire(`Error al cargar la categoría${error}`);
@@ -71,6 +67,28 @@ function AdminProductos(){
        console.log(currentItem);
     }
   }
+  
+  /*Borra productos*/
+  
+  const onDelete = async(id)=>{
+    try{
+      const res = await fetch(`${urlProductos}/${id}`,{
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({id: id})
+      })
+       if (!res.ok) throw new Error("Error al borrar producto");
+       Swal.fire('El producto fue eliminado correctamente');
+        
+    }
+    catch(error){
+         Swal.fire(`Error al borrar el producto ${error}`);
+    }
+    finally {
+      await apiProductos();
+    }
+  }
+  /*Carga categorias y productos*/
      useEffect(()=>{
         apiCategorias();
     },[]);
@@ -178,7 +196,7 @@ function AdminProductos(){
                           variant="danger"
                           size="sm"
                           className="me-2"
-                          onClick={() => onEdit({ id, nombre, precio })}
+                          onClick={() => onDelete(producto.id)}
                           >Eliminar
                         </Button></td>
                     </tr>  )}              

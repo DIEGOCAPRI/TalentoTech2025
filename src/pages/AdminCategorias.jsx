@@ -59,7 +59,6 @@ function AdminCategorias(){
     //Delete Categoría
 
     const onDelete = async(id)=>{
-        console.log(id);
         try {
            const res = await fetch(`${url}/${id}`, {
            method: "DELETE",
