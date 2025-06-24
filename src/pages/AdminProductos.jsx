@@ -1,6 +1,6 @@
 import {Button, Form, Table} from 'react-bootstrap';
 import { useState , useEffect} from "react";
-
+import Swal from 'sweetalert2';
 
 
 
@@ -8,6 +8,7 @@ function AdminProductos(){
 
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
+  const [currentItem, setCurrentItem] = useState({title:"", description:"", price:"", stock:"", category:"", image:""})
 
   const urlCategorias = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias";
   const urlProductos = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/productos";
@@ -28,12 +29,48 @@ function AdminProductos(){
       let request = await fetch(urlProductos);
       let response = await request.json();
       await setProductos(response);
-      console.log(response);
     }
     catch(e){
       sweetError(e);
     }
   }  
+
+  const handleChange = (e)=> {
+      setCurrentItem({...currentItem , [e.target.name] : e.target.value});  
+  }
+
+  const crearProducto = async(e)=> {
+    e.preventDefault();
+    if(currentItem.category =="" || currentItem.description =="" || currentItem.price =="" || currentItem.stock =="" ||currentItem.title==""){
+      Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Por favor complete todos los campos del formulario"
+          });
+          return;
+    }
+    try {
+      const res = await fetch(urlProductos, {
+        method:"POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(currentItem)
+      })
+      if (!res.ok) throw new Error("Error al crear producto");
+
+      Swal.fire({
+          icon: "success",
+          title: "Producto Cargado",
+          text: "Se ha cargado el producto correctamente"
+          });
+    }
+    catch(error){
+       Swal.fire(`Error al cargar la categoría${error}`);
+    }
+    finally {
+       apiProductos();
+       console.log(currentItem);
+    }
+  }
      useEffect(()=>{
         apiCategorias();
     },[]);
@@ -52,27 +89,57 @@ function AdminProductos(){
                        backgroundColor:"rgba(248,249,250)",
                        padding: "20px 10px",
                        borderRadius: "3%",
-                       border: '3px solid rgb(230, 223, 223)'}}>
+                       border: '3px solid rgb(230, 223, 223)'}}
+                onSubmit={crearProducto}       >
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Producto</Form.Label>
-                  <Form.Control type="text" placeholder="Nombre del producto" />
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Nombre del producto"
+                    name="title"
+                    value={currentItem.title}
+                    onChange={handleChange} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Descripción del Producto</Form.Label>
-                  <Form.Control type="text" placeholder="Descripción del producto" />
+                  <Form.Control 
+                    type="text" 
+                    placeholder="Descripción del producto"
+                    name="description"
+                    value={currentItem.description}
+                    onChange ={handleChange} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Categoría</Form.Label>           
-                <Form.Select aria-label="Seleccione una categoría" defaultValue="">
+                <Form.Select 
+                  aria-label="Seleccione una categoría" 
+                  defaultValue=""
+                  name="category"
+                  value={currentItem.category}
+                  onChange={handleChange}>
                   <option value="" disabled>Seleccione una categoría</option>
                   {categorias.map(categoria=> 
-                    <option key={categoria.id} value={categoria.id}>{categoria.name}</option>
+                    <option key={categoria.id} value={categoria.name}>{categoria.name}</option>
                   )}
                 </Form.Select>
                  </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Precio</Form.Label>
-                  <Form.Control type="number" placeholder="Precio" />
+                  <Form.Control 
+                    type="number" 
+                    placeholder="Precio"
+                    name="price"
+                    value={currentItem.price}
+                    onChange={handleChange} />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Stock</Form.Label>
+                  <Form.Control 
+                  type="number" 
+                  placeholder="Stock"
+                  name="stock"
+                  value={currentItem.stock}
+                  onChange={handleChange} />
                 </Form.Group>
                 <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}>
                   Agregar
