@@ -175,8 +175,7 @@ function AdminCategorias(){
                 </tbody>)}
              </Table>
 
-     <Modal show={showModal} onHide={handleCloseModal}>
-      {console.log("catEditada", catEditada)}
+     <Modal show={showModal} onHide={handleCloseModal}>     
         <Modal.Header closeButton>
           <Modal.Title>
             Editar categoría
@@ -205,7 +204,7 @@ function AdminCategorias(){
             variant="primary"
             onClick={onEdit}
           >
-            Edit
+            Editar
           </Button>
         </Modal.Footer>
       </Modal>

@@ -1,4 +1,4 @@
-import {Button, Form, Table} from 'react-bootstrap';
+import {Button, Form, Table, Modal} from 'react-bootstrap';
 import { useState , useEffect} from "react";
 import Swal from 'sweetalert2';
 
@@ -8,7 +8,9 @@ function AdminProductos(){
 
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
-  const [currentItem, setCurrentItem] = useState({title:"", description:"", price:"", stock:"", category:"", image:""})
+  const [currentItem, setCurrentItem] = useState({title:"", description:"", price:"", stock:"", category:"", image:"", id:""});
+  const [showModal, setShowModal] = useState(false);
+  
 
   const urlCategorias = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias";
   const urlProductos = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/productos";
@@ -88,6 +90,40 @@ function AdminProductos(){
       await apiProductos();
     }
   }
+
+  /*Edición => Modal + Api */
+   
+  const openModalEdit = (id, title, description, category, price, stock)=> {
+    console.log(id);
+    setCurrentItem({id: id, title: title, description:description, price: price, stock:stock, category:category, image:""})
+    setShowModal(true);
+    console.log(currentItem);
+  }
+
+  const handleCloseModal = ()=> {
+    setShowModal(false);
+  }
+
+  const onEdit = async()=> {
+    
+    try {
+        const res = await fetch(`${urlProductos}/${currentItem.id}`, {
+              method: 'PUT',
+              headers: {"Content-Type" : "application/json"},
+              body: JSON.stringify(currentItem)        
+        })
+        if (!res.ok) throw new Error("Error al editar producto");
+        Swal.fire('El producto fue editado correctamente');
+        await apiProductos(); 
+      }
+    catch(error) {
+        Swal.fire("Error al editar producto");
+    }
+    finally{
+      handleCloseModal();
+    }
+  }
+  
   /*Carga categorias y productos*/
      useEffect(()=>{
         apiCategorias();
@@ -189,7 +225,7 @@ function AdminProductos(){
                           variant="warning"
                           size="sm"
                           className="me-2"
-                          onClick={() => onEdit({ id, nombre, precio })}
+                          onClick={() => openModalEdit(producto.id, producto.title, producto.description, producto.category, producto.price, producto.stock )}
                           >Editar
                         </Button>
                         <Button
@@ -202,6 +238,84 @@ function AdminProductos(){
                     </tr>  )}              
                 </tbody>)}
              </Table>
+
+             {/*modal edicion*/}
+             <Modal show={showModal} onHide={handleCloseModal}>     
+                <Modal.Header closeButton>
+                  <Modal.Title>
+                    Editar producto
+                  </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form>
+                    <Form.Group className="mb-3" controlId="formName">
+                      <Form.Label>Producto</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value = {currentItem.title} 
+                        name="title"
+                        onChange={handleChange} 
+                        
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formName">
+                      <Form.Label>Descripción del producto</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={currentItem.description}
+                        name="description"
+                        onChange={handleChange}
+                        
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formName">
+                      <Form.Label>Categoría</Form.Label>
+                      <Form.Select 
+                        aria-label="Seleccione una categoría" 
+                        defaultValue=""
+                        name="category"
+                        value={currentItem.category}
+                        onChange={handleChange}>
+                        <option value="" disabled>Seleccione una categoría</option>
+                        {categorias.map(categoria=> 
+                          <option key={categoria.id} value={categoria.name}>{categoria.name}</option>
+                        )}
+                      </Form.Select>
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formName">
+                      <Form.Label>Precio</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value = {currentItem.price}
+                        name="price"
+                        onChange={handleChange}
+                        
+                      />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formName">
+                      <Form.Label>Stock</Form.Label>
+                      <Form.Control
+                        type="number"
+                        value= {currentItem.stock}
+                        name="stock"
+                        onChange={handleChange}
+                        
+                      />
+                    </Form.Group>
+                  </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleCloseModal}>
+                    Cancelar
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={onEdit}
+                  >
+                    Editar
+                  </Button>
+                </Modal.Footer>
+              </Modal>
         </>
     )
 }
