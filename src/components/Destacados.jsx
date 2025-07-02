@@ -7,8 +7,10 @@ function Destacados() {
     const [destacados, setDestacados ] = useState([]);
 
     const apiDestacados = async()=>{
+      const url = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/productos";
        try {
-        let request = await fetch('https://fakestoreapi.com/products?limit=4');
+        let request = await fetch(url);
+       /// let request = await fetch('https://fakestoreapi.com/products?limit=4');
         let response = await request.json();
         setDestacados(response);
        }
@@ -36,9 +38,9 @@ function Destacados() {
                    {destacados.map(destacado=>
                      <div className="col ms-5" key={destacado.id}>
                        <div className="card p-3" style={{ height: 'auto', backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
-                         <h5 className="card-title text-center mt-3" style={{ height: '75px', fontSize: '1.2rem', color: '#212529' }}>{destacado.title}</h5>
-                         <img src={destacado.image} style={{ height: '150px', width:'100px' }}  className="card-img-top m-auto mb-5" alt={destacado.title}></img>
-                         <p className="card-text" style={{ height: '125px', color: '#495057' }}>{destacado.description.slice(0,200)}...</p>
+                         <h5 className="card-title text-center mt-3" style={{ height: '50px', fontSize: '1.2rem', color: '#212529' }}>{destacado.title}</h5>
+                         <img src={destacado.image} style={{ height: '300px', width:'200px', textAlign:'center' }}  className="card-img-top m-auto mb-5" alt={destacado.title}></img>
+                         <p className="card-text" style={{ height: '50px', color: '#495057', textAlign:'center' }}>{destacado.description.slice(0,200)}...</p>
                          <p className="text-center" style={{ fontSize: '1.1rem', color: '#28a745', fontWeight: 'bold' }}>Precio: $ {destacado.price}</p>
                          <div className="text-center mb-3">
                         <ButtonColor texto ="Agregar" color="green"></ButtonColor >

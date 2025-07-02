@@ -12,7 +12,7 @@ function Cards(){
     }, []);
     
     const getProductos = ()=> {
-      fetch('https://fakestoreapi.com/products')
+      fetch('https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/productos')
          .then(response=>response.json())
          .then((data)=>{
             setProductos(data);
@@ -37,8 +37,8 @@ function Cards(){
                      <div className="col ms-5" key={producto.id}>
                        <div className="card p-3" style={{ height: 'auto', backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                          <h5 className="card-title text-center mt-3" style={{ height: '75px', fontSize: '1.2rem', color: '#212529' }}>{producto.title}</h5>
-                         <img src={producto.image} style={{ height: '150px', width:'100px' }}  className="card-img-top m-auto mb-5" alt={producto.title}></img>
-                         <p className="card-text" style={{ height: '125px', color: '#495057' }}>{producto.description.slice(0,200)}...</p>
+                         <img src={producto.image} style={{ height: '300px', width:'200px' }}  className="card-img-top m-auto mb-5" alt={producto.title}></img>
+                         <p className="card-text" style={{ height: '50px', color: '#495057', textAlign:'center' }}>{producto.description.slice(0,200)}...</p>
                          <p className="text-center" style={{ fontSize: '1.1rem', color: '#28a745', fontWeight: 'bold' }}>Precio: $ {producto.price}</p>
                          <div className="text-center mb-3">
                         <ButtonColor texto ="Agregar" color="green"></ButtonColor >

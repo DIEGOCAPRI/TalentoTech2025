@@ -51,11 +51,18 @@ function AdminProductos(){
           });
           return;
     }
+
+    const image = Math.floor(Math.random() * (301 - 200)) + 200;
+
+    const urlImage = `https://picsum.photos/id/${image}/200/300`;
+    const productoFinal = { ...currentItem, image: urlImage };  
+    
+
     try {
       const res = await fetch(urlProductos, {
         method:"POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(currentItem)
+        body: JSON.stringify(productoFinal)
       })
       if (!res.ok) throw new Error("Error al crear producto");
 
@@ -65,8 +72,8 @@ function AdminProductos(){
        Swal.fire(`Error al cargar la categoría${error}`);
     }
     finally {
+      limpiarProductos();
        apiProductos();
-       console.log(currentItem);
     }
   }
   
@@ -102,6 +109,7 @@ function AdminProductos(){
 
   const handleCloseModal = ()=> {
     setShowModal(false);
+     limpiarProductos();
   }
 
   const onEdit = async()=> {
@@ -120,6 +128,7 @@ function AdminProductos(){
         Swal.fire("Error al editar producto");
     }
     finally{
+      limpiarProductos();
       handleCloseModal();
     }
   }
@@ -133,6 +142,13 @@ function AdminProductos(){
         apiProductos();
     },[])
 
+  /*limpia productos */
+
+  const limpiarProductos = ()=>{
+    setCurrentItem({title:"", description:"", price:"", stock:"", category:"", image:"", id:""});
+  }
+
+  
 
     return (
         <>
