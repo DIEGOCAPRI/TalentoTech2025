@@ -6,13 +6,15 @@ import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from "react";
 import Swal from 'sweetalert2';
 import { LoginContext } from '../context/LoginContext';
+import { CarritoContext } from '../context/CarritoContext';
 
 
 function NavBar(){
-  const [cantidadCarrito, setCantidadCarrito] = useState(0);
+  
 
   const [categorias, setCategorias ] = useState([]);
   const {isLogin} = useContext(LoginContext);
+  const {montoCarrito} = useContext(CarritoContext);
 
     const apiCategorias = async()=>{
        try {
@@ -70,7 +72,7 @@ function NavBar(){
         
         <Navbar.Brand href="#home">  
         <img src="../src/images/Nav/carrito.png" alt="" width={30} height={30}/>
-        <span className='p-3'>${cantidadCarrito}</span>
+        <span className='p-3'>${montoCarrito}</span>
         </Navbar.Brand>
         
       </Container>

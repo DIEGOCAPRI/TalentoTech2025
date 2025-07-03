@@ -1,4 +1,4 @@
-function ButtonColor({texto, color}){
+function ButtonColor({texto, color, onClick}){
     const estilo = {backgroundColor : color,
                    color: 'white',
                    padding: '10px',
@@ -8,7 +8,11 @@ function ButtonColor({texto, color}){
                    borderRadius: '6px'       
     }
 
-    return <button style={estilo} >{texto}</button>
+    return <button 
+            style={estilo} 
+            onClick ={onClick}>
+                {texto}
+            </button>
 
 }
 

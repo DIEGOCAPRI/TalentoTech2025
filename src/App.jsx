@@ -28,10 +28,13 @@ import Faqs from './pages/Faqs';
 import RutaProtegida from './components/RutaProtegida';
 //context
 import {LoginProvider } from './context/LoginContext';
+import { CarritoProvider } from './context/CarritoContext';
 
 function App() {
 
     return (
+     <>
+     <CarritoProvider>
      <LoginProvider>
      <Router>
      <div>
@@ -59,6 +62,8 @@ function App() {
      </div>
      </Router>
      </LoginProvider>
+     </CarritoProvider>
+     </>
      
     )
 

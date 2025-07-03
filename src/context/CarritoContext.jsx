@@ -6,7 +6,7 @@ export const CarritoProvider = ({children})=>{
 
     const [carrito, setCarrito] = useState([]);
 
-    const [contadorCarrito, setContador] = useState(0);
+    const [montoCarrito, setMontoCarrito] = useState(0);
 
     useEffect(() => {
         if(localStorage.getItem("carrito")){
@@ -34,7 +34,7 @@ export const CarritoProvider = ({children})=>{
     }
 
     return(
-        <CarritoContext.Provider value={{carrito, setCarrito, contadorCarrito, setContador}}>
+        <CarritoContext.Provider value={{carrito, setCarrito, montoCarrito, setMontoCarrito}}>
             {children}
         </CarritoContext.Provider>
     )

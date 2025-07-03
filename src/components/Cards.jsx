@@ -1,11 +1,13 @@
 import ButtonColor from "./ButtonColor";
-import { useState , useEffect} from "react";
+import { useState , useEffect, useContext} from "react";
 import {Spinner} from 'react-bootstrap';
+import { CarritoContext } from "../context/CarritoContext";
 
 function Cards(){
     
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando ] = useState(true);
+    const {setMontoCarrito, montoCarrito} = useContext(CarritoContext);
 
     useEffect(()=>{
         getProductos();
@@ -23,7 +25,13 @@ function Cards(){
              setCargando(false);
          })
     }
-   
+    
+    const agregarProducto = (price) => {
+
+      setMontoCarrito(Number(montoCarrito) + Number(price));
+
+    }
+
     return (
               <> 
             <h2 className="text-center mt-5 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Nuestros Productos</h2>
@@ -40,8 +48,12 @@ function Cards(){
                          <img src={producto.image} style={{ height: '300px', width:'200px' }}  className="card-img-top m-auto mb-5" alt={producto.title}></img>
                          <p className="card-text" style={{ height: '50px', color: '#495057', textAlign:'center' }}>{producto.description.slice(0,200)}...</p>
                          <p className="text-center" style={{ fontSize: '1.1rem', color: '#28a745', fontWeight: 'bold' }}>Precio: $ {producto.price}</p>
-                         <div className="text-center mb-3">
-                        <ButtonColor texto ="Agregar" color="green"></ButtonColor >
+                         <div className="text-center mb-3">                      
+                        <ButtonColor 
+                          texto ="Agregar" 
+                          color="green"
+                          onClick = {()=> agregarProducto(producto.price)}>  
+                        </ButtonColor >
                         <ButtonColor texto ="Eliminar" color="red"></ButtonColor >
                         </div>
                        </div>
