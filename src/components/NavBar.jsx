@@ -70,8 +70,8 @@ function NavBar(){
           </Nav>
         </Navbar.Collapse>
         
-        <Navbar.Brand href="#home">  
-        <img src="../src/images/Nav/carrito.png" alt="" width={30} height={30}/>
+        <Navbar.Brand href="#home">
+        <Link to="/carrito"><img src="../src/images/Nav/carrito.png" alt="" width={30} height={30}/></Link>        
         <span className='p-3'>${montoCarrito}</span>
         </Navbar.Brand>
         

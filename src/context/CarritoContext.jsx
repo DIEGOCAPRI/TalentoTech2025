@@ -8,33 +8,16 @@ export const CarritoProvider = ({children})=>{
 
     const [montoCarrito, setMontoCarrito] = useState(0);
 
-    useEffect(() => {
-        if(localStorage.getItem("carrito")){
-            setCarrito( JSON.parse(localStorage.getItem("carrito")) );
-        }
-    }, []);
-
-    const addItem = (p_item, cantidad) => {
-        const carrito_temp = [carrito];
-        carrito_temp.push({
-            ID: p_item.ID,
-            precio: p_item.precio,
-            nombre: p_item.nombre,
-            cantidad: cantidad
-        });
-        setCarrito(...carrito, carrito);
-
-
-        //localStorage.setItem("carrito", JSON.stringify(carrito));
-
+    const agregarCarrito = (producto)=> {
+        setCarrito(carritoActual=> [...carritoActual, producto]);
     }
 
-    const someItem = (p_item) => {
+    const eliminarCarrito = (id)=> {
 
     }
 
     return(
-        <CarritoContext.Provider value={{carrito, setCarrito, montoCarrito, setMontoCarrito}}>
+        <CarritoContext.Provider value={{carrito, setCarrito, montoCarrito, setMontoCarrito, agregarCarrito, eliminarCarrito}}>
             {children}
         </CarritoContext.Provider>
     )
