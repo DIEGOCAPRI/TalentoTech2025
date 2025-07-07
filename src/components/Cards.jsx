@@ -7,7 +7,7 @@ function Cards(){
     
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando ] = useState(true);
-    const {setMontoCarrito, montoCarrito, setCarrito, agregarCarrito} = useContext(CarritoContext);
+    const {setMontoCarrito, montoCarrito, setCarrito, agregarCarrito, carrito} = useContext(CarritoContext);
 
     useEffect(()=>{
         getProductos();
@@ -26,14 +26,12 @@ function Cards(){
          })
     }
     
-    const agregarProducto = (producto) => {
-
-      const {id, title, description, category, price} = producto;
-
-      setMontoCarrito(Number(montoCarrito) + Number(price));
-
+    const agregarProducto = (producto) => { 
       agregarCarrito(producto);
+    }
 
+    const eliminarProducto = (productoid) => {
+      eliminarCarrito(productoid);
     }
 
     return (
@@ -52,49 +50,17 @@ function Cards(){
                          <img src={producto.image} style={{ height: '300px', width:'200px' }}  className="card-img-top m-auto mb-5" alt={producto.title}></img>
                          <p className="card-text" style={{ height: '50px', color: '#495057', textAlign:'center' }}>{producto.description.slice(0,200)}...</p>
                          <p className="text-center" style={{ fontSize: '1.1rem', color: '#28a745', fontWeight: 'bold' }}>Precio: $ {producto.price}</p>
-                         <div className="text-center mb-3">
-                        <button
-                          onClick = {()=> agregarProducto(producto)}
-                          style={{
-                                  backgroundColor: '#ff4d4d',
-                                  border: 'none',
-                                  borderRadius: '5px',
-                                  color: 'white',
-                                  width: '30px',
-                                  height: '30px',
-                                  fontSize: '18px',
-                                  cursor: 'pointer'
-                                }}>
-                            -
-                        </button> 
-                        <input 
-                              type="number" 
-                              name="" 
-                              id="" 
-                              max={producto.stock} 
-                              min={0} 
-                              readOnly
-                              style= {{appearance: 'textfield', marginLeft:"1%", marginRight:"1%"}}/>
-                        <button
-                          onClick = {()=> agregarProducto(producto)}
-                          style={{
-                                  backgroundColor: '#4CAF50',
-                                  border: 'none',
-                                  borderRadius: '5px',
-                                  color: 'white',
-                                  width: '30px',
-                                  height: '30px',
-                                  fontSize: '18px',
-                                  cursor: 'pointer'
-                                }}
-                          >+
-                        </button>                      
+                         <div className="text-center mb-3">               
                         <ButtonColor 
                           texto ="Agregar" 
                           color="green"
                           onClick = {()=> agregarProducto(producto)}>  
                         </ButtonColor >
-                        <ButtonColor texto ="Eliminar" color="red"></ButtonColor >
+                        <ButtonColor 
+                          texto ="Eliminar" 
+                          color="red"
+                          onClick = {()=> eliminarProducto(producto.id)}>
+                        </ButtonColor >
                         </div>
                        </div>
                      </div>
