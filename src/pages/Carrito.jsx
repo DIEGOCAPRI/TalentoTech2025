@@ -31,13 +31,13 @@ function Carrito (){
           </thead>
           <tbody>
            {carrito.map(carr=>
-               <tr key={carr.id}>
-                  <td>{carr.title}</td>
-                  <td>{carr.description}</td>
-                  <td>{carr.category}</td>
-                  <td>{carr.price}</td>
+               <tr key={carr.producto.id}>
+                  <td>{carr.producto.title}</td>
+                  <td>{carr.producto.description}</td>
+                  <td>{carr.producto.category}</td>
+                  <td>{carr.producto.price}</td>
                   <td>{carr.cantidad}</td>
-                  <td>{carr.price}</td>
+                  <td>{carr.producto.price * carr.cantidad}</td>
                   <td>
                     <ButtonColor 
                          texto ="Eliminar" 
