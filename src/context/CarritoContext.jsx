@@ -15,6 +15,10 @@ export const CarritoProvider = ({children})=>{
         agregarItem(producto);
         const carritoActualizado = JSON.parse(localStorage.getItem('productosCarrito'));
         setCarrito(carritoActualizado);
+        const montoActualizado = carritoActualizado.reduce ((total, carr)=>{
+            return total + (carr.producto.price * carr.cantidad);
+        },0);
+        setMontoCarrito(montoActualizado);
 
     }
 
@@ -23,18 +27,11 @@ export const CarritoProvider = ({children})=>{
         eliminarItem(id);
         const carritoActualizado = JSON.parse(localStorage.getItem('productosCarrito'));
         setCarrito(carritoActualizado);
-        /*
-        setCarrito(carritoActual=>{
-            const existeCarrito = carritoActual.find(carr=> carr.id == id);
-
-            if (existeCarrito){
-                return carritoActual.map(car=>
-                    car.id == id ? {...car, cantidad: car.cantidad - 1}
-                     : console.log('error')
-                )
-            }
-            
-        })*/
+      /*  const montoActualizado = carritoActualizado.reduce ((total, carr)=>{
+            return total + (carr.producto.price * carr.cantidad);
+        },0);
+        setMontoCarrito(montoActualizado);*/
+       
     }
 
     return(

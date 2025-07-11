@@ -1,10 +1,12 @@
-import { useState , useEffect} from "react";
+import { useState , useEffect, useContext} from "react";
 import ButtonColor from "./ButtonColor";
 import Swal from 'sweetalert2';
+import { CarritoContext } from "../context/CarritoContext";
 
 function Destacados() {
     
     const [destacados, setDestacados ] = useState([]);
+    const {agregarCarrito, carrito, eliminarCarrito} = useContext(CarritoContext);
 
     const apiDestacados = async()=>{
       const url = "https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/productos";
@@ -18,6 +20,7 @@ function Destacados() {
          sweetError();
        }
     }
+    
 
     useEffect(()=>{
         apiDestacados();
@@ -31,6 +34,16 @@ function Destacados() {
                 confirmButtonText: 'Aceptar'
               })
         }
+    const agregarProducto = (destacado) => { 
+      console.log(destacado);
+      agregarCarrito(destacado);
+    }
+
+    const eliminarProducto = (destacadoId) => {
+      eliminarCarrito(destacadoId);
+    }
+
+    
     
     
     return (<><h2 className="text-center mt-5 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Nuestros Productos Destacados</h2>
@@ -43,8 +56,44 @@ function Destacados() {
                          <p className="card-text" style={{ height: '50px', color: '#495057', textAlign:'center' }}>{destacado.description.slice(0,200)}...</p>
                          <p className="text-center" style={{ fontSize: '1.1rem', color: '#28a745', fontWeight: 'bold' }}>Precio: $ {destacado.price}</p>
                          <div className="text-center mb-3">
-                        <ButtonColor texto ="Agregar" color="green"></ButtonColor >
-                        <ButtonColor texto ="Eliminar" color="red"></ButtonColor >
+                            <button
+                                onClick={() => eliminarProducto(destacado.id)}
+                                ///disabled={(cantidades[producto.id] || 0) >= producto.stock}
+                                style={{
+                                  backgroundColor: '#ff4d4d',
+                                  border: 'none',
+                                  borderRadius: '5px',
+                                  color: 'white',
+                                  width: '30px',
+                                  height: '30px',
+                                  fontSize: '18px',
+                                  cursor: 'pointer'
+                                }}
+                             >
+                            -
+                            </button>                        
+                            <input type="number" 
+                               readOnly
+                               style={{width:"10%", marginLeft:"2%", marginRight:"2%", appearance: 'textfield', borderRadius: "5px", textAlign:"center"}} 
+                               value={
+                               carrito.map(carr => carr.producto.id == destacado.id ? carr.cantidad : '') 
+                             } />
+                            <button
+                                onClick={() => agregarProducto(destacado)}
+                                ///disabled={(cantidades[producto.id] || 0) >= producto.stock}
+                                style={{
+                                  backgroundColor: '#4CAF50',
+                                  border: 'none',
+                                  borderRadius: '5px',
+                                  color: 'white',
+                                  width: '30px',
+                                  height: '30px',
+                                  fontSize: '18px',
+                                  cursor: 'pointer'
+                                }}
+                             >
+                                +
+                            </button>              
                         </div>
                        </div>
                      </div>

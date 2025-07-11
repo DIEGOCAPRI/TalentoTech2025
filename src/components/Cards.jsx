@@ -7,7 +7,7 @@ function Cards(){
     
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando ] = useState(true);
-    const {setMontoCarrito, montoCarrito, setCarrito, agregarCarrito, carrito, eliminarCarrito} = useContext(CarritoContext);
+    const {agregarCarrito, carrito, eliminarCarrito} = useContext(CarritoContext);
 
     useEffect(()=>{
         getProductos();
@@ -75,7 +75,7 @@ function Cards(){
                           } />
                         <button
                             onClick={() => agregarProducto(producto)}
-                            ///disabled={(cantidades[producto.id] || 0) >= producto.stock}
+                            disabled={(cantidades[producto.id] || 0) >= producto.stock}
                             style={{
                               backgroundColor: '#4CAF50',
                               border: 'none',
