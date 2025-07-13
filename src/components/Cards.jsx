@@ -1,4 +1,3 @@
-import ButtonColor from "./ButtonColor";
 import { useState , useEffect, useContext} from "react";
 import {Spinner} from 'react-bootstrap';
 import { CarritoContext } from "../context/CarritoContext";
@@ -11,6 +10,7 @@ function Cards(){
 
     useEffect(()=>{
         getProductos();
+        carrito;
     }, []);
     
     const getProductos = ()=> {
@@ -75,7 +75,7 @@ function Cards(){
                           } />
                         <button
                             onClick={() => agregarProducto(producto)}
-                            disabled={(cantidades[producto.id] || 0) >= producto.stock}
+                            ///disabled={(cantidades[producto.id] || 0) >= producto.stock}
                             style={{
                               backgroundColor: '#4CAF50',
                               border: 'none',

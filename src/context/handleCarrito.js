@@ -1,10 +1,9 @@
 export function agregarItem(producto){ 
 
     const carrito = JSON.parse(localStorage.getItem('productosCarrito')) || [];
-    console.log(carrito);
+    
     const existeCarrito = carrito.find(carr=> carr.producto.id == producto.id);
-    console.log('test');
-    console.log(existeCarrito);
+    
     let carritoActualizado = [];
     if(existeCarrito){
        carritoActualizado = carrito.map(car=> car.producto.id == producto.id ? 
@@ -39,6 +38,9 @@ export function eliminarItem(productoId){
     
 }
 
-export function obtenerTodo(){
-
+export function limpiarCarritoId(id) {
+  let carritoActualizado = [];
+  const carrito = JSON.parse(localStorage.getItem('productosCarrito'));
+  carritoActualizado = carrito.filter(carr => carr.producto.id != id);
+  localStorage.setItem('productosCarrito', JSON.stringify(carritoActualizado));
 }

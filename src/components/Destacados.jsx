@@ -1,5 +1,4 @@
 import { useState , useEffect, useContext} from "react";
-import ButtonColor from "./ButtonColor";
 import Swal from 'sweetalert2';
 import { CarritoContext } from "../context/CarritoContext";
 
