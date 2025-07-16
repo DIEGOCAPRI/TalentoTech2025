@@ -18,9 +18,11 @@ function NavBar(){
 
     const apiCategorias = async()=>{
        try {
-        let request = await fetch('https://fakestoreapi.com//products/categories');
+        //let request = await fetch('https://fakestoreapi.com//products/categories');
+        let request = await fetch('https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/categorias')
         let response = await request.json();
         setCategorias(response);
+      
        }
        catch(e) {
          sweetError();
@@ -61,8 +63,8 @@ function NavBar(){
             )}            
             <NavDropdown title="Categorias" id="basic-nav-dropdown">
               {categorias.map(categoria=>
-                <NavDropdown.Item href="#action/3.1" key={categoria}>
-                  <Link to={`/prodxcategoria/${categoria}`} style={{textDecoration:"none", color:"black"}}>{categoria}</Link>
+                <NavDropdown.Item href="#action/3.1" key={categoria.id}>
+                  <Link to={`/prodxcategoria/${categoria.name}`} style={{textDecoration:"none", color:"black"}}>{categoria.name}</Link>
                   </NavDropdown.Item>
               )
               }

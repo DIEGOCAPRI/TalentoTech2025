@@ -13,7 +13,8 @@ function Destacados() {
         let request = await fetch(url);
        /// let request = await fetch('https://fakestoreapi.com/products?limit=4');
         let response = await request.json();
-        setDestacados(response);
+        let respDestacado = response.filter( res => res.destacado == "SI");
+        setDestacados(respDestacado);
        }
        catch(e) {
          sweetError();
@@ -34,7 +35,6 @@ function Destacados() {
               })
         }
     const agregarProducto = (destacado) => { 
-      console.log(destacado);
       agregarCarrito(destacado);
     }
 
@@ -57,7 +57,6 @@ function Destacados() {
                          <div className="text-center mb-3">
                             <button
                                 onClick={() => eliminarProducto(destacado.id)}
-                                ///disabled={(cantidades[producto.id] || 0) >= producto.stock}
                                 style={{
                                   backgroundColor: '#ff4d4d',
                                   border: 'none',
@@ -74,12 +73,11 @@ function Destacados() {
                             <input type="number" 
                                readOnly
                                style={{width:"10%", marginLeft:"2%", marginRight:"2%", appearance: 'textfield', borderRadius: "5px", textAlign:"center"}} 
-                               value={
-                               carrito.map(carr => carr.producto.id == destacado.id ? carr.cantidad : '') 
+                               value={                      
+                               carrito.find(carr => carr.producto.id === destacado.id)?.cantidad || 0 
                              } />
                             <button
-                                onClick={() => agregarProducto(destacado)}
-                                ///disabled={(cantidades[producto.id] || 0) >= producto.stock}
+                                onClick={() => agregarProducto(destacado)}                       
                                 style={{
                                   backgroundColor: '#4CAF50',
                                   border: 'none',

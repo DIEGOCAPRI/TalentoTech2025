@@ -8,7 +8,7 @@ function AdminProductos(){
 
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
-  const [currentItem, setCurrentItem] = useState({title:"", description:"", price:"", stock:"", category:"", image:"", id:""});
+  const [currentItem, setCurrentItem] = useState({title:"", description:"", price:"", stock:"", category:"", image:"", id:"", destacado:""});
   const [showModal, setShowModal] = useState(false);
   
 
@@ -43,7 +43,7 @@ function AdminProductos(){
 
   const crearProducto = async(e)=> {
     e.preventDefault();
-    if(currentItem.category =="" || currentItem.description =="" || currentItem.price =="" || currentItem.stock =="" ||currentItem.title==""){
+    if(currentItem.category =="" || currentItem.description =="" || currentItem.price =="" || currentItem.stock =="" ||currentItem.title=="" || currentItem.destacado ==""){
       Swal.fire({
           icon: "error",
           title: "Error",
@@ -100,11 +100,9 @@ function AdminProductos(){
 
   /*Edición => Modal + Api */
    
-  const openModalEdit = (id, title, description, category, price, stock)=> {
-    console.log(id);
-    setCurrentItem({id: id, title: title, description:description, price: price, stock:stock, category:category, image:""})
+  const openModalEdit = (id, title, description, category, price, stock, destacado)=> {
+    setCurrentItem({id: id, title: title, description:description, price: price, stock:stock, category:category, image:"", destacado : destacado})
     setShowModal(true);
-    console.log(currentItem);
   }
 
   const handleCloseModal = ()=> {
@@ -145,7 +143,7 @@ function AdminProductos(){
   /*limpia productos */
 
   const limpiarProductos = ()=>{
-    setCurrentItem({title:"", description:"", price:"", stock:"", category:"", image:"", id:""});
+    setCurrentItem({title:"", description:"", price:"", stock:"", category:"", image:"", id:"", destacado: ""});
   }
 
   
@@ -211,6 +209,19 @@ function AdminProductos(){
                   value={currentItem.stock}
                   onChange={handleChange} />
                 </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                  <Form.Label>Destacado</Form.Label>           
+                <Form.Select 
+                  aria-label="Seleccione" 
+                  defaultValue=""
+                  name="destacado"
+                  value={currentItem.destacado}
+                  onChange={handleChange}>
+                  <option value="" disabled>Seleccione</option>                
+                  <option key="SI" value="SI">SI</option>
+                  <option key="NO" value="NO">NO</option>                 
+                </Form.Select>
+                 </Form.Group>
                 <Button variant="primary" type="submit" style={{display: "flex", margin:"auto"}}>
                   Agregar
                 </Button>
@@ -224,6 +235,7 @@ function AdminProductos(){
                   <th>Categoria</th>
                   <th>Precio</th>
                   <th>Stock</th>
+                  <th>Destacado</th>
                   <th>Acciones</th>
                 </tr>
               </thead>          
@@ -237,11 +249,12 @@ function AdminProductos(){
                     <td>{producto.category}</td>
                     <td>{producto.price}</td>
                     <td>{producto.stock}</td>
+                    <td>{producto.destacado}</td>
                     <td><Button
                           variant="warning"
                           size="sm"
                           className="me-2"
-                          onClick={() => openModalEdit(producto.id, producto.title, producto.description, producto.category, producto.price, producto.stock )}
+                          onClick={() => openModalEdit(producto.id, producto.title, producto.description, producto.category, producto.price, producto.stock, producto.destacado )}
                           >Editar
                         </Button>
                         <Button
@@ -317,6 +330,19 @@ function AdminProductos(){
                         onChange={handleChange}
                         
                       />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Destacado</Form.Label>           
+                      <Form.Select 
+                        aria-label="Seleccione" 
+                        defaultValue=""
+                        name="destacado"
+                        value={currentItem.destacado}
+                        onChange={handleChange}>
+                        <option value="" disabled>Seleccione</option>                
+                        <option key="SI" value="SI">SI</option>
+                        <option key="NO" value="NO">NO</option>                 
+                      </Form.Select>
                     </Form.Group>
                   </Form>
                 </Modal.Body>

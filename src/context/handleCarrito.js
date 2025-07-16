@@ -44,3 +44,14 @@ export function limpiarCarritoId(id) {
   carritoActualizado = carrito.filter(carr => carr.producto.id != id);
   localStorage.setItem('productosCarrito', JSON.stringify(carritoActualizado));
 }
+
+
+export function chequeaStock (producto){
+  
+  const carrito = JSON.parse(localStorage.getItem('productosCarrito'));
+  const productoCarrito = carrito?.find(carr=> carr.producto.id ==producto.id) ;
+  const cantidadCarrito = productoCarrito?.cantidad || 0;  
+  const verificaStock = producto.stock > cantidadCarrito; 
+  return verificaStock;   
+  
+}

@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 
-import {  agregarItem, eliminarItem,  limpiarCarritoId } from "./handleCarrito";
+import {  agregarItem, eliminarItem,  limpiarCarritoId, chequeaStock } from "./handleCarrito";
 import Swal from 'sweetalert2';
 
 export const CarritoContext = createContext();
@@ -13,13 +13,9 @@ export const CarritoProvider = ({children})=>{
 
     const agregarCarrito = (producto)=> {
 
-    /*    const verificaStock = chequeaStock(producto); 
-        Swal.fire({
-  title: "Drag me!",
-  icon: "success",
-  draggable: true
-});*/
+       const verificaStock = chequeaStock(producto); 
 
+       if(verificaStock) {
         agregarItem(producto);
         const carritoActualizado = JSON.parse(localStorage.getItem('productosCarrito'));
         setCarrito(carritoActualizado);
@@ -27,7 +23,14 @@ export const CarritoProvider = ({children})=>{
             return total + (carr.producto.price * carr.cantidad);
         },0);
         setMontoCarrito(montoActualizado);
-
+       }
+       else {
+        Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No tenemos el stock solicitado para el producto",
+    });
+    }       
     }
 
     const eliminarCarrito = (id)=> {

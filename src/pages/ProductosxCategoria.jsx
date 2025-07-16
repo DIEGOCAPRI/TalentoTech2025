@@ -12,9 +12,11 @@ function ProductosxCategoria() {
 
     const apiProductos = async()=>{
        try {
-        let request = await fetch(`https://fakestoreapi.com/products/category/${categoria}`);
+        //let request = await fetch(`https://fakestoreapi.com/products/category/${categoria}`);
+        let request = await fetch('https://684b2b0b165d05c5d35bb945.mockapi.io/talentotech/productos');
         let response = await request.json();
-        setProductos(response);
+        let productos = response.filter(res => res.category == categoria);
+        setProductos(productos);
        }
        catch(e) {
          sweetError();

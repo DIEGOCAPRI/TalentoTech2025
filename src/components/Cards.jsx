@@ -1,16 +1,18 @@
 import { useState , useEffect, useContext} from "react";
 import {Spinner} from 'react-bootstrap';
 import { CarritoContext } from "../context/CarritoContext";
+import Paginador from "./Paginador";
 
 function Cards(){
     
     const [productos, setProductos] = useState([]);
     const [cargando, setCargando ] = useState(true);
     const {agregarCarrito, carrito, eliminarCarrito} = useContext(CarritoContext);
+    const [paginaActual, setPaginaActual] = useState(1);
+    const productosPorPagina = 6;
 
     useEffect(()=>{
         getProductos();
-        carrito;
     }, []);
     
     const getProductos = ()=> {
@@ -33,6 +35,11 @@ function Cards(){
     const eliminarProducto = (productoid) => {
       eliminarCarrito(productoid);
     }
+    
+
+    const ultimoProducto = paginaActual * productosPorPagina;
+    const primerProducto = ultimoProducto - productosPorPagina;
+    const productosPaginado = productos.slice(primerProducto,ultimoProducto);
 
     return (
               <> 
@@ -43,7 +50,7 @@ function Cards(){
               </Spinner>
             ) :   (
               <div className="row row-cols-1 row-cols-md-4 g-4 mt-3 justify-content-center">
-                   {productos.map(producto=>
+                   {productosPaginado.map(producto=>
                      <div className="col ms-5" key={producto.id}>
                        <div className="card p-3" style={{ height: 'auto', backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                          <h5 className="card-title text-center mt-3" style={{ height: '75px', fontSize: '1.2rem', color: '#212529' }}>{producto.title}</h5>
@@ -53,7 +60,6 @@ function Cards(){
                          <div className="text-center mb-3">
                          <button
                             onClick={() => eliminarProducto(producto.id)}
-                            ///disabled={(cantidades[producto.id] || 0) >= producto.stock}
                             style={{
                               backgroundColor: '#ff4d4d',
                               border: 'none',
@@ -71,11 +77,10 @@ function Cards(){
                             readOnly
                             style={{width:"10%", marginLeft:"2%", marginRight:"2%", appearance: 'textfield', borderRadius: "5px", textAlign:"center"}} 
                             value={
-                            carrito.map(carr => carr.producto.id == producto.id ? carr.cantidad : '') 
+                            carrito.find(carr => carr.producto.id === producto.id)?.cantidad || 0 
                           } />
                         <button
                             onClick={() => agregarProducto(producto)}
-                            ///disabled={(cantidades[producto.id] || 0) >= producto.stock}
                             style={{
                               backgroundColor: '#4CAF50',
                               border: 'none',
@@ -95,7 +100,13 @@ function Cards(){
                    )}
              </div>
             )
-            }            
+            }
+            <Paginador
+              totalProductos={productos.length}
+              paginaActual={paginaActual}
+              setPaginaActual={setPaginaActual}
+              productosPorPagina={productosPorPagina}
+            />           
              </>
     )
 }
