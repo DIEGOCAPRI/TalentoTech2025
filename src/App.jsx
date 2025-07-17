@@ -30,6 +30,9 @@ import RutaProtegida from './components/RutaProtegida';
 import {LoginProvider } from './context/LoginContext';
 import { CarritoProvider } from './context/CarritoContext';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
 
     return (
@@ -40,7 +43,8 @@ function App() {
      <div>
         
         <Header/>
-        <NavBar/>        
+        <NavBar/>   
+        <ToastContainer/>     
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/cards" element={<Cards/>}/>

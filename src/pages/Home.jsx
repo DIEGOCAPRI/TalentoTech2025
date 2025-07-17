@@ -1,12 +1,16 @@
 import React from 'react';
 import Destacados from '../components/Destacados';
 import Carousel from 'react-bootstrap/Carousel';
+import { Helmet } from 'react-helmet-async';
 
 
 
 function Home() {
   return (
-    <>  
+    <><Helmet>
+      <title>Tienda Multimarca</title>
+      <meta name="description" content="Toda la indumentaria que necesitás en un solo lugar"/>
+      </Helmet>  
       <h1 className="text-center pt-5" style={{}}>Bienvenido a Tienda Multimarca</h1>
       <h2 className="text-center pb-4" style={{fontStyle:"italic"}}>Los mejores productos en un solo lugar</h2> 
       <Carousel>

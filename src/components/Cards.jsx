@@ -2,6 +2,7 @@ import { useState , useEffect, useContext} from "react";
 import {Spinner} from 'react-bootstrap';
 import { CarritoContext } from "../context/CarritoContext";
 import Paginador from "./Paginador";
+import { Helmet } from "react-helmet-async";
 
 function Cards(){
     
@@ -43,18 +44,22 @@ function Cards(){
 
     return (
               <> 
+            <Helmet>
+                  <title>Listado de productos de la tienda Multimarca</title>
+                  <meta name="description" content="Conoce todos nuestros productos de las mejores marcas"/>
+            </Helmet>    
             <h2 className="text-center mt-5 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Nuestros Productos</h2>
             {cargando? (
               <Spinner animation="border" role="status" style={{margin:"auto", display:"flex"}}>  
               <span className="visually-hidden">Cargando...</span>           
               </Spinner>
             ) :   (
-              <div className="row row-cols-1 row-cols-md-4 g-4 mt-3 justify-content-center">
+              <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3 justify-content-center">
                    {productosPaginado.map(producto=>
-                     <div className="col ms-5" key={producto.id}>
-                       <div className="card p-3" style={{ height: 'auto', backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                     <div className="col d-flex justify-content-center" key={producto.id}>
+                       <div className="card p-3 h-100" style={{ maxWidth: '320px',width:'100%', backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                          <h5 className="card-title text-center mt-3" style={{ height: '75px', fontSize: '1.2rem', color: '#212529' }}>{producto.title}</h5>
-                         <img src={producto.image} style={{ height: 'auto', width:'70%' }}  className="card-img-top m-auto mb-5" alt={producto.title}></img>
+                         <img src={producto.image} style={{ objectFit: 'contain', width:'100%', maxHeight: '200px',margin:'auto' }}  className="card-img-top mb-3" alt={producto.title}></img>
                          <p className="card-text" style={{ height: '50px', color: '#495057', textAlign:'center' }}>{producto.description.slice(0,200)}...</p>
                          <p className="text-center" style={{ fontSize: '1.1rem', color: '#28a745', fontWeight: 'bold' }}>Precio: $ {producto.price}</p>
                          <div className="text-center mb-3">

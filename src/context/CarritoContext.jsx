@@ -2,6 +2,8 @@ import { createContext, useState } from "react";
 
 import {  agregarItem, eliminarItem,  limpiarCarritoId, chequeaStock } from "./handleCarrito";
 import Swal from 'sweetalert2';
+import { toast } from 'react-toastify';
+
 
 export const CarritoContext = createContext();
 
@@ -23,6 +25,7 @@ export const CarritoProvider = ({children})=>{
             return total + (carr.producto.price * carr.cantidad);
         },0);
         setMontoCarrito(montoActualizado);
+        toast.success("Producto agregado al carrito");
        }
        else {
         Swal.fire({
@@ -42,6 +45,7 @@ export const CarritoProvider = ({children})=>{
             return total + (carr.producto.price * carr.cantidad);
         },0);
         setMontoCarrito(montoActualizado);
+        toast.warn('Producto eliminado del carrito');
       
     }
 

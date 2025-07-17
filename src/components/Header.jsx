@@ -1,4 +1,4 @@
-import { Navbar, Button } from 'react-bootstrap';
+import { Navbar, Button, Container, Nav } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import { Link,  useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
@@ -17,9 +17,12 @@ import { LoginContext } from '../context/LoginContext';
     }
     
         return (
-        <Navbar bg="dark" variant="dark" className="">
-            <Navbar.Brand className="w-25 ms-5"><Link to="/"><Image  src="../src/images/Header/logo_multimarca.jpeg" alt="Logo" style={{width:"300px", marginLeft:"150px"}} /></Link></Navbar.Brand>            
-            <Navbar.Text className="text-end text-white w-50">
+        <Navbar bg="dark" variant="dark" expand ="md" className="py-2">
+            <Container>
+            <Navbar.Brand className="d-flex align-items-center"><Link to="/"><Image  src="../src/images/Header/logo_multimarca.jpeg" alt="Logo" style={{height: '50px', objectFit: 'contain'}} fluid /></Link></Navbar.Brand>            
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse className="responsive-navbar-nav">
+            <Nav className="ms-auto align-items-center">
             {isLogin ? (
                 <>
                 <span style={{marginRight:"10px"}}>Hola! {usuarioLogin}</span>
@@ -32,8 +35,10 @@ import { LoginContext } from '../context/LoginContext';
                 <Link to="/login" className="text-decoration-none">Iniciar Sesión</Link>
             )
                 
-            }    
-            </Navbar.Text>
+            } 
+            </Nav>   
+            </Navbar.Collapse>
+            </Container>
         </Navbar>
         );
     }

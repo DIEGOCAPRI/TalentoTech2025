@@ -46,10 +46,10 @@ function Destacados() {
     
     
     return (<><h2 className="text-center mt-5 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Nuestros Productos Destacados</h2>
-            <div className="row row-cols-1 row-cols-md-4 g-4 mt-3 justify-content-center">
+            <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 mt-3 justify-content-center">
                    {destacados.map(destacado=>
-                     <div className="col ms-5" key={destacado.id}>
-                       <div className="card p-3" style={{ height: 'auto', backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                     <div className="col d-flex justify-content-center" key={destacado.id}>
+                       <div className="card p-3 h-100" style={{ maxWidth: '320px',width:'100%', backgroundColor: '#f8f9fa', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
                          <h5 className="card-title text-center mt-3" style={{ height: '50px', fontSize: '1.2rem', color: '#212529' }}>{destacado.title}</h5>
                          <img src={destacado.image} style={{ height: '300px', width:'200px', textAlign:'center' }}  className="card-img-top m-auto mb-5" alt={destacado.title}></img>
                          <p className="card-text" style={{ height: '50px', color: '#495057', textAlign:'center' }}>{destacado.description.slice(0,200)}...</p>
