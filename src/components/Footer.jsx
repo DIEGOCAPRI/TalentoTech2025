@@ -20,9 +20,9 @@ function Footer(){
             </div>
             <div className="divfooter redes">
                 <h4>Nuestras Redes</h4>
-                <p><img src="../src/images/Footer/instagram.png" alt="instagram" />Instagram</p>
-                <p><img src="../src/images/Footer/facebook.png" alt="facebook" />Facebook</p>
-                <p><img src="../src/images/Footer/whatsapp.png" alt="whatsapp" />Whatsapp</p>
+                <p><img src="../images/Footer/instagram.png" alt="instagram" />Instagram</p>
+                <p><img src="../images/Footer/facebook.png" alt="facebook" />Facebook</p>
+                <p><img src="../images/Footer/whatsapp.png" alt="whatsapp" />Whatsapp</p>
                 <p>Copyright &#169; Tienda Multimarca</p>
             </div>
 

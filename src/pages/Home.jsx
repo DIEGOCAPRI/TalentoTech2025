@@ -14,7 +14,7 @@ function Home() {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="../src/images/Carrousel/carrousel_ofertas.jpg"
+            src="../images/Carrousel/carrousel_ofertas.jpg"
             alt="Ofertas"
           />
           <Carousel.Caption>
@@ -26,7 +26,7 @@ function Home() {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="../src/images/Carrousel/carrousel_loto.jpg"
+            src="../images/Carrousel/carrousel_loto.jpg"
             alt="Ofertas Lotto"
           />
           <Carousel.Caption>
@@ -38,7 +38,7 @@ function Home() {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="../src/images/Carrousel/carrousel_river.jpg"
+            src="../images/Carrousel/carrousel_river.jpg"
             alt="Equipos de argentina"
           />
           <Carousel.Caption>

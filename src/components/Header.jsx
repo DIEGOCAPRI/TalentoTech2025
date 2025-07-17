@@ -19,7 +19,7 @@ import { LoginContext } from '../context/LoginContext';
         return (
         <Navbar bg="dark" variant="dark" expand ="md" className="py-2">
             <Container>
-            <Navbar.Brand className="d-flex align-items-center"><Link to="/"><Image  src="../src/images/Header/logo_multimarca.jpeg" alt="Logo" style={{height: '50px', objectFit: 'contain'}} fluid /></Link></Navbar.Brand>            
+            <Navbar.Brand className="d-flex align-items-center"><Link to="/"><Image  src="../images/Header/logo_multimarca.jpeg" alt="Logo" style={{height: '50px', objectFit: 'contain'}} fluid /></Link></Navbar.Brand>            
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse className="responsive-navbar-nav">
             <Nav className="ms-auto align-items-center">
