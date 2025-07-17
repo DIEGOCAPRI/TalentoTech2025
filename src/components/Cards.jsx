@@ -2,7 +2,7 @@ import { useState , useEffect, useContext} from "react";
 import {Spinner} from 'react-bootstrap';
 import { CarritoContext } from "../context/CarritoContext";
 import Paginador from "./Paginador";
-import { Helmet } from "react-helmet-async";
+
 
 function Cards(){
     
@@ -44,10 +44,6 @@ function Cards(){
 
     return (
               <> 
-            <Helmet>
-                  <title>Listado de productos de la tienda Multimarca</title>
-                  <meta name="description" content="Conoce todos nuestros productos de las mejores marcas"/>
-            </Helmet>    
             <h2 className="text-center mt-5 fw-bold seccion-titulo" style={{ fontStyle: 'italic' }}>Nuestros Productos</h2>
             {cargando? (
               <Spinner animation="border" role="status" style={{margin:"auto", display:"flex"}}>  
